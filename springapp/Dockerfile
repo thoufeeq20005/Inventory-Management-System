@@ -1,14 +1,12 @@
-# Use a base image with Java
-FROM openjdk:11-jre-slim
-
-# Set the working directory in the container
+# Stage 1: Build
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copy the JAR file into the container
-COPY target/my-spring-boot-app.jar app.jar
-
-# Expose the port the app runs on
+# Stage 2: Run
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
 EXPOSE 8080
-
-# Command to run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
