@@ -11,6 +11,8 @@
 reactapp/node_modules/
 reactapp/build/
 reactapp/test-results.json
+reactapp/.env.local
+reactapp/.env
 
 # Spring Boot / Maven
 springapp/target/
